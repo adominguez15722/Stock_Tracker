@@ -1,0 +1,51 @@
+body {
+    height:1000px;
+    background:#475d62 url(https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=464&q=80) no-repeat center fixed;
+    background-size:cover;
+    position:relative;
+    color: whitesmoke;
+}
+
+.column {
+    float: center;
+    width: 15%;
+    font-size: larger;
+    margin-left: 2%;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+h2 {
+    text-align: center;
+}
+
+.stock_name {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+
+button {
+    display: flex;
+    margin: auto;
+    justify-content: center;
+}
+
+span {
+    color: orangered;
+    position: absolute;
+    left: 0;
+}
+
+.stock_list {
+    list-style-type: none;
+}
+
+.names {
+    font-size: x-large;
+}

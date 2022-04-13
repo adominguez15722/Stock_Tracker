@@ -1,0 +1,40 @@
+{% extends 'base2.html' %}
+{% block content %}
+<h1>{{ stock.stock_name }} {{ stock.stock_ticker }} ${{ cur_price }}</h1>
+<br>
+<h6>{{ comp_info }}</h6>
+<br>
+<div>{{ plot|safe }}</div>
+<br>
+<div class="row">
+    <div class="column">
+        <p>Date</p>
+        {% for line in prices.formatted_date %}
+        <p>{{ line }}</p>
+        {% endfor %}
+        </div>
+        
+        <div class="column">
+        <p>Closing Price</p>
+        {% for line in prices.close %}
+        <p>${{ line }}</p>
+        {% endfor %}
+        </div>
+        
+        <div class="column">
+        <p>Fifty-Two Week Low</p>
+        <p>${{ fifty_low }}</p>
+        </div>
+
+        <div class="column">
+        <p>Fifty-Two Week High</p>
+        <p>${{ fifty_high }}</p>
+        </div>
+        
+        <div class="column">
+        <p>Earnings Per Share</p>
+        <p>${{ eps }}</p>
+        </div>
+</div>
+
+{% endblock %}
