@@ -181,7 +181,7 @@ def stock_details(name):
     # comp_df = comp_df.drop('date', axis=1).set_index('formatted_date')
     prices = rounded.head()
    
-    hist = ticker.history(period='1y')
+    hist = ticker.history(period='3y')
     # fig = go.Figure(data=go.Scatter(x=hist.index,y=hist['Close'], mode='lines'))
     # fig.show()
 
