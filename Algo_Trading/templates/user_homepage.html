@@ -5,18 +5,20 @@
 <form action="/stock_info" method="POST">
     <h2>What stock would you like to track?</h2>
     <input type="text" type="stock_name" name="stock_name" class='stock_name' maxlength="4" onkeydown="return /[a-z]/i.test(event.key)" placeholder="Enter 4 Letter Ticker">
-    <button>Submit</button>
+    <button type="submit">Submit</button>
+</form>
     <ul>
         {% for info in user.stocks%}
         <li class="stock_list">
             
-            <button type="button" class="close" onclick="deleteStock({{ info.id }})">
-            <span aria-hidden="true">&times;</span>
-            </button>
+            <form action="/delete_stock" method="POST">
+                <button type="submit" class="close" name="del_button" value="{{ info.id }}">
+                    <span class="stock_close"  aria-hidden="true">&times;</span>
+                </button>
+            </form>
             <a href="/stock_page/{{ info.stock_name }}" class="names">{{ info.stock_name }}</a>
         </li>
         <br>
         {% endfor %}
     </ul>
-</form>
 {% endblock %}

@@ -100,26 +100,9 @@ def homepage():
 @login_required
 def stock_information():
     stock_name = request.form.get('stock_name').upper()
-    url = "https://yfapi.net/v6/finance/quote"
+    biz_name = yf.Ticker(f"{stock_name}")
+    comp_name = biz_name.info["longName"]
 
-    querystring = {"symbols":f"{stock_name}"}
-    headers = {
-            'x-api-key': f"{API_KEY}"
-            }
-
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    response_info = json.loads(response.text)
-    
-    # if KeyError:
-    #     flash('Not a valid stock ticker', category='error')
-    #     return render_template('user_homepage.html', user=current_user)
-    # else:
-    comp_name = response_info['quoteResponse']['result'][0]['longName']
-    comp_sym = response_info['quoteResponse']['result'][0]['symbol']
-    comp_fifty = response_info['quoteResponse']['result'][0]['fiftyDayAverage']
-    comp_two_hundred = response_info['quoteResponse']['result'][0]['twoHundredDayAverage']
-
-    stock_info = (comp_fifty - comp_two_hundred, comp_two_hundred, comp_fifty)
     new_stock = Stocks(stock_name=comp_name, user_id=current_user.id, stock_ticker=stock_name)
 
     stock = Stocks.query.filter_by(stock_name=comp_name).first()
@@ -134,20 +117,22 @@ def stock_information():
         return render_template('user_homepage.html', user=current_user)
     return render_template('user_homepage.html', user=current_user)
 
-@app.route('/delete_stock', methods=['POST', 'GET'])
+@app.route('/delete_stock', methods=['POST'])
 @login_required
 def delete_stock():
-    stock = request.get_json(force=True)
-    stockId = stock['stockId']
-    stock = Stocks.query.get(stockId)
-    if stock:
-        if stock.user_id == current_user.id:
-            db.session.delete(stock)
-            db.session.commit()
-            # flash('Deleted stock', category='success')
-    # return render_template('user_homepage.html', user=current_user)
-    return jsonify({})
-
+    stock_id = request.form.get("del_button")
+    if request.method == "POST":
+        # stock = request.get_json(force=True)
+        # stockId = stock['stockId']
+        stock = Stocks.query.get(stock_id)
+        if stock:
+            if stock.user_id == current_user.id:
+                db.session.delete(stock)
+                db.session.commit()
+                flash('Deleted stock', category='success')
+            return render_template('user_homepage.html', user=current_user)
+            # return jsonify({})
+    return render_template('user_homepage.html', user=current_user)
 
 @app.route('/stock_page/<name>', methods=['GET'])
 @login_required
